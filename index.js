@@ -28,6 +28,7 @@ http.createServer((req, resp) => {
 
 */
 
+/*
 var colors = require('colors')
 console.log("Node package".green);
 
@@ -37,3 +38,8 @@ const chalk = require("chalk");
 
 // Printing the text
 console.log(chalk.red("Ikbal"))
+
+*/
+
+console.log("try nodemon");
+console.log("try ikbal try and try");
