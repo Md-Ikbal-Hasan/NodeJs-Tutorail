@@ -1,33 +1,39 @@
-// console.log('start execution...');
+const express = require('express');
+const app = express();
 
-// setTimeout(() => {
-//     console.log('logic execution...');
-// }, 2000)
-
-// console.log('complete execution...');
-
-
-// drawback of asynchronus programming......
-// let a = 20;
-// let b = 0;
-// setTimeout(() => {
-//     b = 30;
-// }, 2000);
-
-// console.log(a + b);
-
-
-// solution of drawback
-let a = 20;
-let b = 0;
-
-let waitingData = new Promise((resolve, reject) => {
-    setTimeout(() => {
-        resolve(30);
-    }, 2000);
+app.get('', (req, res) => {
+    // console.log("data sent by browser: ", req.query);
+    res.send(`
+    <h1> Welcome, to Home page</h1> 
+    <a href="/about" >Go to about page  </a>
+    `)
 })
 
-waitingData.then((data) => {
-    b = data;
-    console.log(a + b);
+app.get('/about', (req, res) => {
+    res.send(`
+    <h1> Welcome, to About page</h1>
+     <input type="text" placeholder = "User name" value=${req.query.name} />
+     <button>Submit </button>
+     <a href="/" >Go to Home page  </a>
+    
+    `)
 })
+
+app.get('/help', (req, res) => {
+    res.send([
+        {
+            name: 'Md Ikbal Hosen',
+            email: 'ikbal@gmail.com'
+        },
+        {
+            name: 'Md Ramjan Hosen',
+            email: 'ramjan@gmail.com'
+        },
+        {
+            name: 'Md Sunny Hosen',
+            email: 'sunny@gmail.com'
+        }
+    ])
+})
+
+app.listen(5000)
