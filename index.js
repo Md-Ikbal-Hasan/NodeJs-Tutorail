@@ -24,9 +24,14 @@ app.get('/profile', (req, resp) => {
     const user = {
         name: 'Md Ikbal Hosen',
         email: 'ikbal@gmail.com',
-        city: 'Cumilla'
+        city: 'Cumilla',
+        skills: ['html', 'css', 'js', 'react', 'node', 'C', 'C++']
     }
     resp.render('profile', { user })
+})
+
+app.get('/login', (_, resp) => {
+    resp.render('login')
 })
 
 app.get('*', (req, resp) => {
