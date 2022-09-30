@@ -1,30 +1,33 @@
-const fs = require('fs');
-const path = require('path');
-const dirPath = path.join(__dirname, 'crud');
+// console.log('start execution...');
 
-// create file...........
-// fs.writeFileSync(`${dirPath}/apple.txt`, `this is simple text file`);
-// fs.writeFileSync(`${dirPath}/test.html`, `this is simple html file`);
+// setTimeout(() => {
+//     console.log('logic execution...');
+// }, 2000)
 
-const filePath = `${dirPath}/apple.txt`;
+// console.log('complete execution...');
 
 
-// read file  ..........
-// fs.readFile(filePath, 'utf8', (err, item) => {
-//     console.log(item);
-// })
+// drawback of asynchronus programming......
+// let a = 20;
+// let b = 0;
+// setTimeout(() => {
+//     b = 30;
+// }, 2000);
+
+// console.log(a + b);
 
 
-// update file ........
-// fs.appendFile(filePath, ' and file name is apple.txt', (err) => {
-//     if (!err) console.log('file is updated');
-// });
+// solution of drawback
+let a = 20;
+let b = 0;
 
-
-// rename file ........
-fs.rename(filePath, `${dirPath}/fruit.txt`, (err) => {
-    if (!err) console.log('file name is updated');
+let waitingData = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve(30);
+    }, 2000);
 })
 
-// delete file ........
-// fs.unlinkSync(`${dirPath}/fruit.txt`)
+waitingData.then((data) => {
+    b = data;
+    console.log(a + b);
+})
