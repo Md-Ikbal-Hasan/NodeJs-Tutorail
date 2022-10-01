@@ -10,7 +10,7 @@ const dbConnect = require('./mongodb')
 
 const main = async () => {
     let data = await dbConnect();
-    data = await data.find().toArray();
+    data = await data.find({ brand: 'apple' }).toArray();
     console.log(data);
 
 }
