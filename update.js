@@ -2,10 +2,10 @@ const dbConnect = require('./mongodb')
 
 const updateData = async () => {
     let data = await dbConnect();
-    let result = await data.updateOne(
-        { brand: 'samsung' },
+    let result = await data.update(
+        { brand: 'apple borolox' },
         {
-            $set: { name: 'samsung  latest phone', price: 1240 }
+            $set: { brand: 'apple' }
         }
     )
 
