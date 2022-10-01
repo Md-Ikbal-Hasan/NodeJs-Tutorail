@@ -1,21 +1,28 @@
 const express = require('express');
-const app = express();
 const reqFilter = require('./middleware')
+const app = express();
+const route = express.Router();
 
-app.get('', (req, resp) => {
+route.use(reqFilter);
+
+
+app.get('/', (req, resp) => {
     resp.send(' <h1>  Welcome to home page </h1>')
 })
 
-app.get('/users', reqFilter, (req, resp) => {
+app.get('/users', (req, resp) => {
     resp.send(' <h1>  Welcome to users page </h1>')
 })
 
-app.get('/about', (req, resp) => {
+route.get('/about', (req, resp) => {
     resp.send(' <h1>  Welcome to about page </h1>')
 })
 
-app.get('*', (req, resp) => {
-    resp.send(' <h1> Page is not found </h1>')
+route.get('/contact', (req, resp) => {
+    resp.send(' <h1>  Welcome to contact page </h1>')
 })
+
+
+app.use('/', route);
 
 app.listen(5000);
