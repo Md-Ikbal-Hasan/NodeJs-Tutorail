@@ -1,27 +1,21 @@
 const express = require('express');
 const app = express();
-
-const reqFilter = (req, resp, next) => {
-    if (!req.query.age) {
-        resp.send('Please provide age')
-    } else if (req.query.age < 18) {
-        resp.send('you can not access this page')
-    }
-    else {
-        next();
-
-    }
-}
-
-app.use(reqFilter);
-
+const reqFilter = require('./middleware')
 
 app.get('', (req, resp) => {
-    resp.send('Welcome to home page')
+    resp.send(' <h1>  Welcome to home page </h1>')
 })
 
-app.get('/users', (req, resp) => {
-    resp.send('WElcome to users page')
+app.get('/users', reqFilter, (req, resp) => {
+    resp.send(' <h1>  Welcome to users page </h1>')
+})
+
+app.get('/about', (req, resp) => {
+    resp.send(' <h1>  Welcome to about page </h1>')
+})
+
+app.get('*', (req, resp) => {
+    resp.send(' <h1> Page is not found </h1>')
 })
 
 app.listen(5000);
