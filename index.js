@@ -1,57 +1,45 @@
-const mongoose = require('mongoose');
+const express = require('express');
+require('./config'); // connected with mongodb using mongoos
 
-mongoose.connect('mongodb://localhost:27017/e-comm');
+const Product = require('./product');  // Product model with schema
 
-const productSchema = new mongoose.Schema({
-    name: String,
-    price: Number,
-    brand: String,
-    category: String
+const app = express();
+app.use(express.json());
 
-});
-
-const saveInDB = async () => {
-    const Product = mongoose.model('products', productSchema);
-    let data = new Product({
-        name: "max 100",
-        price: 200,
-        brand: 'maxx',
-        category: 'Mobile'
-    });
-    const result = await data.save();
+// create api
+app.post('/create', async (req, resp) => {
+    let data = new Product(req.body);
+    let result = await data.save();
     console.log(result);
-}
 
-// saveInDB()
+    resp.send(result)
+})
 
-const updateInDB = async () => {
-    const Product = mongoose.model('products', productSchema);
+// get api
+app.get("/list", async (req, resp) => {
+    let data = await Product.find();
+    resp.send(data);
+})
+
+
+// delete api
+app.delete("/delete/:_id", async (req, resp) => {
+    console.log(req.params)
+    let data = await Product.deleteOne(req.params);
+    resp.send(data);
+})
+
+
+// update api
+app.put("/update/:_id", async (req, resp) => {
+    console.log(req.params)
     let data = await Product.updateOne(
-        { name: 'victorians' },
-        {
-            $set: { price: 1290 }
-        }
+        req.params,
+        { $set: (req.body) }
     )
-    console.log(data);
-
-}
-
-// updateInDB()
-
-const deleteInDB = async () => {
-    const Product = mongoose.model('products', productSchema);
-    let data = await Product.deleteOne({ name: 'victorians pro' });
-    console.log(data);
-
-}
-
-// deleteInDB();
+    resp.send(data);
+})
 
 
-const findInDB = async () => {
-    const Product = mongoose.model('products', productSchema);
-    let data = await Product.find({ brand: 'Cumilla' })
-    console.log(data);
-}
 
-// findInDB();
+app.listen(5000);
